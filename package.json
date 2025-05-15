@@ -2,7 +2,7 @@
   "name": "farcaster-mini-app",
   "version": "0.1.0",
   "private": true,
-  "homepage": "https://miguelgarest.com/fcapp",
+  "homepage": ".",
   "dependencies": {
     "@farcaster/frame-sdk": "^0.0.41",
     "@testing-library/dom": "^10.4.0",

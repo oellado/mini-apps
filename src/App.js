@@ -51,7 +51,7 @@ function App() {
     <div
       style={{
         backgroundColor: '#C6A9F2',
-        minHeight: '100vh',
+        Height: '100vh',
         overflow: 'hidden',
         display: 'flex',
         flexDirection: 'column',

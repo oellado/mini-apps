@@ -3,18 +3,20 @@
 <head>
   <meta charset="utf-8" />
   <meta name="fc:frame" content='{
-    "version": "next",
-    "imageUrl": "https://fc.miguelgarest.com/fc/0.gif",
-    "button": {
-      "title": "TRY ME",
-      "action": {
-       "name": "Daily vibes",
-        "type": "launch_frame",
-        "url": "https://fc.miguelgarest.com"
+    "version": "vNext",
+    "image": "https://fc.miguelgarest.com/fc/0.gif",
+    "buttons": [
+      {
+        "label": "TRY ME",
+        "action": "post"
       }
-    },
-    "manifestUrl": "https://fc.miguelgarest.com/.well-known/farcaster.json"
+    ],
+    "postUrl": "https://fc.miguelgarest.com"
   }' />
+  <meta name="fc:frame:image" content="https://fc.miguelgarest.com/fc/0.gif" />
+  <meta name="fc:frame:post_url" content="https://fc.miguelgarest.com" />
+  <meta name="fc:frame:button:1" content="TRY ME" />
+  <meta name="fc:frame:button:1:action" content="post" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="theme-color" content="#000000" />

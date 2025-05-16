@@ -46,7 +46,17 @@ const handleShare = () => {
 
   const encoded = encodeURIComponent(castText);
   const shareUrl = `https://warpcast.com/~/compose?text=${encoded}`;
+// Detect iOS device
+const isIOS = /iPhone|iPad|iPod/.test(navigator.userAgent);
+
+// Use direct open for Android/Desktop
+// Use redirect for iOS (it will still open in mini app WebView)
+if (isIOS) {
   window.location.href = shareUrl;
+} else {
+  window.open(shareUrl, "_blank");
+}
+
 };
 
   if (showSplash) {

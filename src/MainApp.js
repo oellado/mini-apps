@@ -1,12 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { sdk } from '@farcaster/frame-sdk';
 
-// Add this debug code
-console.log('SDK initialized:', sdk);
-sdk.on('error', (error) => {
-  console.error('SDK error:', error);
-});
-
 const vibes = [
   {
     text: 'Today is for movement, get the energy flowing',
@@ -35,18 +29,9 @@ function App() {
   const [showSplash, setShowSplash] = useState(true);
 
   useEffect(() => {
-    console.log('Initializing app...');
-    try {
-      sdk.actions.ready().then(() => {
-        console.log('SDK ready');
-      }).catch((error) => {
-        console.error('Error in SDK ready:', error);
-      });
-      const timeout = setTimeout(() => setShowSplash(false), 1500);
-      return () => clearTimeout(timeout);
-    } catch (error) {
-      console.error('Error in useEffect:', error);
-    }
+    sdk.actions.ready();
+    const timeout = setTimeout(() => setShowSplash(false), 1500);
+    return () => clearTimeout(timeout);
   }, []);
 
   const handleClick = () => {
@@ -62,33 +47,20 @@ function App() {
     
     console.log('Starting share process...');
     console.log('Result:', result);
-    console.log('Text:', result.text);
-    console.log('GIF:', result.gif);
-    
-    // Create the share URL using your deployed domain
-    const shareUrl = 'https://fc.miguelgarest.com/share-result';
-    const fullShareUrl = `${shareUrl}?text=${encodeURIComponent(result.text)}&gif=${encodeURIComponent(result.gif)}`;
-    
-    console.log('Share URL:', fullShareUrl);
     
     try {
       console.log('Attempting to compose cast...');
       await sdk.actions.composeCast({
         text: result.text,
         embeds: [
-          result.gif,
-          fullShareUrl
+          result.gif // Just use the GIF as the first embed
         ]
       });
       console.log('Cast composed successfully');
     } catch (error) {
       console.error('Error sharing to Warpcast:', error);
-      // Add more detailed error information
       if (error.message) {
         console.error('Error message:', error.message);
-      }
-      if (error.stack) {
-        console.error('Error stack:', error.stack);
       }
     }
   };
@@ -225,7 +197,7 @@ function App() {
               fill="white"
             />
             <path
-              d="M4.12445 8.10669L5.0489 11.2356H5.83111V23.8934C5.43837 23.8934 5.12 24.2117 5.12 24.6045V25.4578H4.97779C4.58506 25.4578 4.26666 25.7762 4.26666 26.1689V27.0223H12.2311V26.1689C12.2311 25.7762 11.9127 25.4578 11.52 25.4578H11.3778V24.6045C11.3778 24.2117 11.0594 23.8934 10.6667 23.8934H9.81335V8.10669H4.12445Z"
+              d="M4.12445 8.10669L5.0489 11.2356H5.83111V23.8934C5.43837 23.8934 5.12 24.2117 5.12 24.6045V25.4578H4.97779C4.58506 25.4578 4.26666 25.7762 4.26666 26.1689V27.0223H12.2311V26.1689C12.2311 25.7762 11.9127 25.4578 11.52 25.4578H11.3778V24.6045C11.3778 24.2117 10.6667 23.8934 10.6667 23.8934H9.81335V8.10669H4.12445Z"
               fill="white"
             />
             <path

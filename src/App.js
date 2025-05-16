@@ -45,7 +45,7 @@ const handleShare = () => {
   const castText = `${result.text}\n\n${result.gif}\n\nhttps://warpcast.com/miniapps/F3EoBj27HyTd/daily-vibes`;
   const encoded = encodeURIComponent(castText);
   const shareUrl = `https://warpcast.com/~/compose?text=${encoded}`;
-  const warpcastScheme = `warpcast://compose?text=${encoded}`; // Warpcast native scheme
+  const warpcastScheme = `warpcast://compose?text=${encoded}`;
 
   // Detect iOS device
   const isIOS = /iPhone|iPad|iPod/.test(navigator.userAgent);
@@ -54,22 +54,61 @@ const handleShare = () => {
 
   const openShare = () => {
     if (isIOS) {
-      // Try Warpcast native scheme first
-      const iframe = document.createElement("iframe");
-      iframe.style.display = "none";
-      iframe.src = warpcastScheme;
-      document.body.appendChild(iframe);
+      // Attempt to trigger Warpcast native app via deep link
+      try {
+        // Use a temporary iframe to attempt deep link
+        const iframe = document.createElement("iframe");
+        iframe.style.display = "none";
+        iframe.src = warpcastScheme;
+        document.body.appendChild(iframe);
 
-      // Fallback to web URL after a short delay
-      setTimeout(() => {
-        window.open(shareUrl, "_blank") || (window.location.href = shareUrl);
-        document.body.removeChild(iframe);
-      }, 500);
+        // Try to communicate with Warpcast's native bridge (if available)
+        if (window.webkit && window.webkit.messageHandlers && window.webkit.messageHandlers.warpcast) {
+          window.webkit.messageHandlers.warpcast.postMessage({
+            action: "compose",
+            text: castText
+          });
+        }
+
+        // Fallback after 1 second if deep link doesn't work
+        setTimeout(() => {
+          document.body.removeChild(iframe);
+          // Instead of navigating to shareUrl, copy to clipboard
+          navigator.clipboard.writeText(castText).then(() => {
+            alert("Couldn't open Warpcast compose. Text copied to clipboard. Paste it in Warpcast's compose screen.");
+          }).catch(() => {
+            alert("Couldn't open Warpcast. Please copy this text manually:\n\n" + castText);
+          });
+        }, 1000);
+      } catch (error) {
+        console.error("iOS share error:", error);
+        // Fallback to clipboard
+        navigator.clipboard.writeText(castText).then(() => {
+          alert("Couldn't open Warpcast compose. Text copied to clipboard. Paste it in Warpcast's compose screen.");
+        }).catch(() => {
+          alert("Couldn't open Warpcast. Please copy this text manually:\n\n" + castText);
+        });
+      }
     } else {
-      // Android/Desktop: Open in new tab
+      // Android/Windows: Open in new tab
       window.open(shareUrl, "_blank");
     }
   };
+
+  // Execute share action with error logging
+  try {
+    console.log("Attempting to share:", { isIOS, isWebView, shareUrl, warpcastScheme });
+    openShare();
+  } catch (error) {
+    console.error("Share failed:", error);
+    // Fallback: Copy text to clipboard
+    navigator.clipboard.writeText(castText).then(() => {
+      alert("Failed to open Warpcast. Text copied to clipboard. Paste it in Warpcast's compose screen.");
+    }).catch(() => {
+      alert("Failed to share. Please copy this text manually:\n\n" + castText);
+    });
+  }
+};
 
   // Execute share action
   try {

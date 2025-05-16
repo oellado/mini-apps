@@ -26,9 +26,12 @@ const vibes = [
 
 function App() {
   const [result, setResult] = useState(null);
+  const [showSplash, setShowSplash] = useState(true);
 
   useEffect(() => {
-    sdk.actions.ready(); // Let Warpcast know the app is ready
+    sdk.actions.ready();
+    const timeout = setTimeout(() => setShowSplash(false), 1500); // 1.5 seconds
+    return () => clearTimeout(timeout);
   }, []);
 
   const handleClick = () => {
@@ -42,80 +45,126 @@ function App() {
     try {
       await sdk.actions.cast({ text: castText });
       alert('Cast shared!');
-    } catch (e) {
+    } catch {
       alert('Failed to share.');
     }
   };
 
+  if (showSplash) {
+    return (
+      <div style={{
+        backgroundColor: '#DCE5FF',
+        height: '100vh',
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+        fontSize: '3rem'
+      }}>
+        •ᴗ•
+      </div>
+    );
+  }
+
   return (
-    <div
-      style={{
-        backgroundColor: '#C6A9F2',
-        Height: '100vh',
-        overflow: 'hidden',
+    <div style={{
+      backgroundColor: '#DCE5FF',
+      minHeight: '100vh',
+      display: 'flex',
+      flexDirection: 'column',
+      fontFamily: 'sans-serif'
+    }}>
+      {/* Header */}
+      <div style={{
+        backgroundColor: '#BFC8E0',
+        padding: '12px',
+        textAlign: 'center',
+        fontWeight: 'bold',
+        fontSize: '1.1rem',
+        color: 'white'
+      }}>
+        daily vibes
+      </div>
+
+      {/* Main */}
+      <div style={{
+        flex: 1,
         display: 'flex',
         flexDirection: 'column',
         alignItems: 'center',
         justifyContent: 'center',
-        fontFamily: 'sans-serif',
-        padding: '20px',
-        textAlign: 'center'
-      }}
-    >
-      {!result ? (
-        <>
-          <h1 style={{ fontSize: '2rem', marginBottom: '20px' }}>
-            Show me today’s energy!
-          </h1>
-          <button
-            onClick={handleClick}
-            style={{
-              fontSize: '1.2rem',
-              backgroundColor: '#fff',
-              color: '#000',
-              padding: '10px 20px',
-              border: 'none',
-              borderRadius: '12px',
+        textAlign: 'center',
+        padding: '20px'
+      }}>
+        {!result ? (
+          <>
+            <h1 style={{
+              fontSize: '1.8rem',
               fontWeight: 'bold',
-              cursor: 'pointer'
-            }}
-          >
-            TRY ME
-          </button>
-        </>
-      ) : (
-        <>
-          <h2 style={{ marginBottom: '20px' }}>{result.text}</h2>
-          <img
-            src={result.gif}
-            alt="vibe gif"
-            style={{
-              width: '300px',
-              height: '300px',
-              objectFit: 'contain',
-              backgroundColor: '#EAEAE8',
-              borderRadius: '24px',
-              padding: '10px',
-              marginBottom: '30px'
-            }}
-          />
-          <button
-            onClick={handleShare}
-            style={{
-              fontSize: '1.2rem',
-              backgroundColor: '#fff',
-              color: '#000',
-              padding: '10px 20px',
-              border: 'none',
-              borderRadius: '12px',
-              fontWeight: 'bold',
-              cursor: 'pointer'
-            }}
-          >
-            SHARE
-          </button>
-        </>
-      )}
+              marginBottom: '20px'
+            }}>
+              Show me today’s energy
+            </h1>
+            <button
+              onClick={handleClick}
+              style={{
+                fontSize: '1.2rem',
+                backgroundColor: '#fff',
+                color: '#000',
+                padding: '10px 24px',
+                border: 'none',
+                borderRadius: '12px',
+                fontWeight: 'bold',
+                cursor: 'pointer'
+              }}
+            >
+              Try me!
+            </button>
+          </>
+        ) : (
+          <>
+            <h2 style={{ marginBottom: '20px' }}>{result.text}</h2>
+            <img
+              src={result.gif}
+              alt="vibe gif"
+              style={{
+                width: '300px',
+                height: '300px',
+                objectFit: 'contain',
+                backgroundColor: '#EAEAE8',
+                borderRadius: '24px',
+                padding: '10px',
+                marginBottom: '30px'
+              }}
+            />
+            <button
+              onClick={handleShare}
+              style={{
+                fontSize: '1.2rem',
+                backgroundColor: '#fff',
+                color: '#000',
+                padding: '10px 20px',
+                border: 'none',
+                borderRadius: '12px',
+                fontWeight: 'bold',
+                cursor: 'pointer'
+              }}
+            >
+              Share
+            </button>
+          </>
+        )}
+      </div>
+
+      {/* Footer */}
+      <div style={{
+        padding: '10px',
+        textAlign: 'center',
+        color: 'white',
+        fontSize: '0.9rem'
+      }}>
+        <div style={{ fontSize: '1.2rem' }}>⛩</div>
+        © Miguelgarest, 2025.
+      </div>
     </div>
   );
 }

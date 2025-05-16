@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react';
-import { sdk } from '@farcaster/frame-sdk';
 
 const vibes = [
   {
@@ -29,7 +28,6 @@ function App() {
   const [showSplash, setShowSplash] = useState(true);
 
   useEffect(() => {
-    sdk.actions.ready();
     const timeout = setTimeout(() => setShowSplash(false), 1500); // 1.5 seconds
     return () => clearTimeout(timeout);
   }, []);
@@ -39,20 +37,12 @@ function App() {
     setResult(random);
   };
 
-  const handleShare = async () => {
+  const handleShare = () => {
     if (!result) return;
-    
-    try {
-      await sdk.actions.composeCast({
-        text: result.text,
-        embeds: [
-          result.gif,
-          'https://warpcast.com/miniapps/F3EoBj27HyTd/daily-vibes'
-        ]
-      });
-    } catch (error) {
-      console.error('Error sharing to Warpcast:', error);
-    }
+    const castText = `${result.text}\n\n${result.gif}\n\nhttps://warpcast.com/miniapps/F3EoBj27HyTd/daily-vibes`;
+    const encoded = encodeURIComponent(castText);
+    const shareUrl = `https://warpcast.com/~/compose?text=${encoded}`;
+    window.open(shareUrl, "_blank");
   };
 
   if (showSplash) {

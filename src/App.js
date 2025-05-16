@@ -30,7 +30,7 @@ function App() {
 
   useEffect(() => {
     sdk.actions.ready();
-    const timeout = setTimeout(() => setShowSplash(false), 1500);
+    const timeout = setTimeout(() => setShowSplash(false), 1500); // 1.5 seconds
     return () => clearTimeout(timeout);
   }, []);
 
@@ -39,18 +39,21 @@ function App() {
     setResult(random);
   };
 
-  const handleShare = async () => {
-    if (!result) return;
-    const castText = `${result.text}\n\n${result.gif}`;
-    try {
-      await sdk.actions.composeCast({
-        text: castText,
-        embeds: [result.gif]
-      });
-    } catch (error) {
-      console.error('Error sharing:', error);
-    }
-  };
+const handleShare = async () => {
+  if (!result) return;
+  
+  try {
+    await sdk.actions.composeCast({
+      text: result.text, // Just include the text result
+      embeds: [
+        result.gif, // The GIF URL will be rendered as a media embed
+        'https://warpcast.com/miniapps/F3EoBj27HyTd/daily-vibes' // Mini app embed
+      ]
+    });
+  } catch (error) {
+    console.error('Error sharing to Warpcast:', error);
+  }
+};
 
   if (showSplash) {
     return (
@@ -104,7 +107,7 @@ function App() {
               fontWeight: 'bold',
               marginBottom: '20px'
             }}>
-              Show me today's energy
+              Show me today’s energy
             </h1>
             <button
               onClick={handleClick}
@@ -184,7 +187,7 @@ function App() {
               fill="white"
             />
             <path
-              d="M4.12445 8.10669L5.0489 11.2356H5.83111V23.8934C5.43837 23.8934 5.12 24.2117 5.12 24.6045V25.4578H4.97779C4.58506 25.4578 4.26666 25.7762 4.26666 26.1689V27.0223H12.2311V26.1689C12.2311 25.7762 11.9127 25.4578 11.52 25.4578H11.3778V24.6045C11.3778 24.2117 10.6667 23.8934 10.6667 23.8934H9.81335V8.10669H4.12445Z"
+              d="M4.12445 8.10669L5.0489 11.2356H5.83111V23.8934C5.43837 23.8934 5.12 24.2117 5.12 24.6045V25.4578H4.97779C4.58506 25.4578 4.26666 25.7762 4.26666 26.1689V27.0223H12.2311V26.1689C12.2311 25.7762 11.9127 25.4578 11.52 25.4578H11.3778V24.6045C11.3778 24.2117 11.0594 23.8934 10.6667 23.8934H9.81335V8.10669H4.12445Z"
               fill="white"
             />
             <path
@@ -193,4 +196,10 @@ function App() {
             />
           </svg>
         </a>
-        <div>
+        <div>© Miguelgarest, 2025.</div>
+      </div>
+    </div>
+  );
+}
+
+export default App;

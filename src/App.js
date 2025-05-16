@@ -42,87 +42,13 @@ function App() {
 const handleShare = () => {
   if (!result) return;
 
-  const castText = `${result.text}\n\n${result.gif}\n\nhttps://warpcast.com/miniapps/F3EoBj27HyTd/daily-vibes`;
+  const castText = `${result.text}\n\n${result.gif}\n\nhttps://warpcast.com/miniapps/F3EoBj27HyTd/daily-vibes `;
+
   const encoded = encodeURIComponent(castText);
   const shareUrl = `https://warpcast.com/~/compose?text=${encoded}`;
-  const warpcastScheme = `warpcast://compose?text=${encoded}`;
-
-  // Detect iOS device
-  const isIOS = /iPhone|iPad|iPod/.test(navigator.userAgent);
-  // Detect if running in WebView
-  const isWebView = window.navigator.userAgent.includes("WebView") || window.navigator.userAgent.includes("Warpcast");
-
-  const openShare = () => {
-    if (isIOS) {
-      // Attempt to trigger Warpcast native app via deep link
-      try {
-        // Use a temporary iframe to attempt deep link
-        const iframe = document.createElement("iframe");
-        iframe.style.display = "none";
-        iframe.src = warpcastScheme;
-        document.body.appendChild(iframe);
-
-        // Try to communicate with Warpcast's native bridge (if available)
-        if (window.webkit && window.webkit.messageHandlers && window.webkit.messageHandlers.warpcast) {
-          window.webkit.messageHandlers.warpcast.postMessage({
-            action: "compose",
-            text: castText
-          });
-        }
-
-        // Fallback after 1 second if deep link doesn't work
-        setTimeout(() => {
-          document.body.removeChild(iframe);
-          // Instead of navigating to shareUrl, copy to clipboard
-          navigator.clipboard.writeText(castText).then(() => {
-            alert("Couldn't open Warpcast compose. Text copied to clipboard. Paste it in Warpcast's compose screen.");
-          }).catch(() => {
-            alert("Couldn't open Warpcast. Please copy this text manually:\n\n" + castText);
-          });
-        }, 1000);
-      } catch (error) {
-        console.error("iOS share error:", error);
-        // Fallback to clipboard
-        navigator.clipboard.writeText(castText).then(() => {
-          alert("Couldn't open Warpcast compose. Text copied to clipboard. Paste it in Warpcast's compose screen.");
-        }).catch(() => {
-          alert("Couldn't open Warpcast. Please copy this text manually:\n\n" + castText);
-        });
-      }
-    } else {
-      // Android/Windows: Open in new tab
-      window.open(shareUrl, "_blank");
-    }
-  };
-
-  // Execute share action with error logging
-  try {
-    console.log("Attempting to share:", { isIOS, isWebView, shareUrl, warpcastScheme });
-    openShare();
-  } catch (error) {
-    console.error("Share failed:", error);
-    // Fallback: Copy text to clipboard
-    navigator.clipboard.writeText(castText).then(() => {
-      alert("Failed to open Warpcast. Text copied to clipboard. Paste it in Warpcast's compose screen.");
-    }).catch(() => {
-      alert("Failed to share. Please copy this text manually:\n\n" + castText);
-    });
-  }
+  window.open(shareUrl, "_blank");
 };
 
-  // Execute share action
-  try {
-    openShare();
-  } catch (error) {
-    console.error("Share failed:", error);
-    // Fallback: Copy text to clipboard
-    navigator.clipboard.writeText(castText).then(() => {
-      alert("Failed to open Warpcast. Text copied to clipboard!");
-    }).catch(() => {
-      alert("Failed to share. Please copy this text manually:\n\n" + castText);
-    });
-  }
-};
   if (showSplash) {
     return (
       <div style={{

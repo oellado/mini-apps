@@ -41,12 +41,21 @@ function App() {
 
 const handleShare = () => {
   if (!result) return;
-  const castText = `${result.text}\n\n${result.gif}\n\nhttps://warpcast.com/miniapps/F3EoBj27HyTd/daily-vibes`;
+
+  // Assume result.index contains the current vibe index (0 to 4)
+  // If not, you'll need to add it in your logic when generating the vibe result
+
+  // Build the embed URL for the current vibe index:
+  const embedUrl = `https://fc.miguelgarest.com/embed-${result.index}.html`;
+
+  // Construct cast text: quote + single embed URL
+  const castText = `${result.text}\n\n${embedUrl}`;
+
+  // Encode and open share URL on Warpcast
   const encoded = encodeURIComponent(castText);
   const shareUrl = `https://warpcast.com/~/compose?text=${encoded}`;
   window.open(shareUrl, "_blank");
 };
-
   if (showSplash) {
     return (
       <div style={{

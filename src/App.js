@@ -40,22 +40,14 @@ function App() {
   };
 
   const handleShare = async () => {
-    if (!result) {
-      console.log('No result to share');
-      return;
-    }
-    const appLink = 'https://mini-app1-zeta.vercel.app';
-    const castText = `${result.text}\n\n${appLink}\n\n${result.gif}`;
-
-    console.log('Attempting to share cast:', castText);
-
+    if (!result) return;
+    const castText = `${result.text}\n\nhttps://mini-app1-zeta.vercel.app\n\n${result.gif}`;
     try {
       await sdk.actions.cast({ text: castText });
       alert('Cast shared!');
-      console.log('Cast shared successfully');
     } catch (error) {
-      alert('Failed to share.');
-      console.error('Error sharing cast:', error);
+      console.error('Share error:', error);
+      alert('Failed to share. Make sure you are logged in with Farcaster Frame.');
     }
   };
 
@@ -67,7 +59,8 @@ function App() {
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'center',
-        fontSize: '3rem'
+        fontSize: '3rem',
+        fontFamily: 'Arial, Helvetica, sans-serif'
       }}>
         •ᴗ•
       </div>
@@ -80,7 +73,7 @@ function App() {
       minHeight: '100vh',
       display: 'flex',
       flexDirection: 'column',
-      fontFamily: 'sans-serif'
+      fontFamily: 'Arial, Helvetica, sans-serif'
     }}>
       {/* Header */}
       <div style={{

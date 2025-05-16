@@ -39,16 +39,18 @@ function App() {
     setResult(random);
   };
 
-  const handleShare = async () => {
-    if (!result) return;
-    const castText = `${result.text}\n\nhttps://fc-daily-vibes-git-master-mgrsts-projects.vercel.app\n\n${result.gif}`;
-    try {
-      await sdk.actions.cast({ text: castText });
-      alert('Cast shared!');
-    } catch {
-      alert('Failed to share.');
-    }
-  };
+const handleShare = async () => {
+  if (!result) return;
+  const appLink = 'https://mini-app1-zeta.vercel.app';
+  const castText = `${result.text}\n\n${appLink}\n\n${result.gif}`;
+  try {
+    await sdk.actions.cast({ text: castText });
+    alert('Cast shared!');
+  } catch (error) {
+    alert('Failed to share.');
+    console.error('Share error:', error);
+  }
+};
 
   if (showSplash) {
     return (

@@ -42,13 +42,39 @@ function App() {
 const handleShare = async () => {
   if (!result) return;
   
+  // Create an embed-optimized URL for the mini app
+  const embedUrl = new URL('https://warpcast.com/miniapps/F3EoBj27HyTd/daily-vibes');
+  embedUrl.searchParams.set('embed', 'true'); // Add embed parameter
+
   try {
     await sdk.actions.composeCast({
-      text: `${result.text}\n\nhttps://warpcast.com/miniapps/F3EoBj27HyTd/daily-vibes`, // Include mini app URL in text
+      text: result.text,
       embeds: [
-        result.gif // Only use the GIF as an embed
+        result.gif,
+        embedUrl.toString()
       ]
     });
+
+    // If the above doesn't work reliably, try this version with a slight delay:
+    /*
+    // First set the text and GIF
+    await sdk.actions.composeCast({
+      text: result.text,
+      embeds: [result.gif]
+    });
+
+    // Short delay to ensure the composer is ready
+    await new Promise(resolve => setTimeout(resolve, 150));
+
+    // Then add both embeds
+    await sdk.actions.composeCast({
+      text: result.text,
+      embeds: [
+        result.gif,
+        embedUrl.toString()
+      ]
+    });
+    */
   } catch (error) {
     console.error('Error sharing to Warpcast:', error);
   }

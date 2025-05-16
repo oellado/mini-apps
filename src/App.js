@@ -30,7 +30,7 @@ function App() {
 
   useEffect(() => {
     sdk.actions.ready();
-    const timeout = setTimeout(() => setShowSplash(false), 1500);
+    const timeout = setTimeout(() => setShowSplash(false), 1500); // 1.5 seconds
     return () => clearTimeout(timeout);
   }, []);
 
@@ -39,18 +39,25 @@ function App() {
     setResult(random);
   };
 
-const handleShare = async () => {
-  if (!result) return;
-  const appLink = 'https://mini-app1-zeta.vercel.app';
-  const castText = `${result.text}\n\n${appLink}\n\n${result.gif}`;
-  try {
-    await sdk.actions.cast({ text: castText });
-    alert('Cast shared!');
-  } catch (error) {
-    alert('Failed to share.');
-    console.error('Share error:', error);
-  }
-};
+  const handleShare = async () => {
+    if (!result) {
+      console.log('No result to share');
+      return;
+    }
+    const appLink = 'https://mini-app1-zeta.vercel.app';
+    const castText = `${result.text}\n\n${appLink}\n\n${result.gif}`;
+
+    console.log('Attempting to share cast:', castText);
+
+    try {
+      await sdk.actions.cast({ text: castText });
+      alert('Cast shared!');
+      console.log('Cast shared successfully');
+    } catch (error) {
+      alert('Failed to share.');
+      console.error('Error sharing cast:', error);
+    }
+  };
 
   if (showSplash) {
     return (
@@ -164,30 +171,8 @@ const handleShare = async () => {
         color: 'white',
         fontSize: '0.9rem'
       }}>
-        <a href="https://warpcast.com/miguelgarest.eth" target="_blank" rel="noopener noreferrer">
-          <svg
-            width="32"
-            height="32"
-            viewBox="0 0 32 32"
-            fill="none"
-            xmlns="http://www.w3.org/2000/svg"
-            style={{ marginBottom: '4px' }}
-          >
-            <path
-              d="M8.2489 4.97778H23.7511V27.0222H21.4756V16.9244H21.4533C21.2017 14.1337 18.8563 11.9466 16 11.9466C13.1437 11.9466 10.7983 14.1337 10.5468 16.9244H10.5245V27.0222H8.2489V4.97778Z"
-              fill="white"
-            />
-            <path
-              d="M4.12445 8.10669L5.0489 11.2356H5.83111V23.8934C5.43837 23.8934 5.12 24.2117 5.12 24.6045V25.4578H4.97779C4.58506 25.4578 4.26666 25.7762 4.26666 26.1689V27.0223H12.2311V26.1689C12.2311 25.7762 11.9127 25.4578 11.52 25.4578H11.3778V24.6045C11.3778 24.2117 11.0594 23.8934 10.6667 23.8934H9.81335V8.10669H4.12445Z"
-              fill="white"
-            />
-            <path
-              d="M21.6178 23.8934C21.2251 23.8934 20.9067 24.2117 20.9067 24.6045V25.4578H20.7644C20.3717 25.4578 20.0533 25.7762 20.0533 26.1689V27.0223H28.0178V26.1689C28.0178 25.7762 27.6994 25.4578 27.3067 25.4578H27.1644V24.6045C27.1644 24.2117 26.8461 23.8934 26.4533 23.8934V11.2356H27.2356L28.16 8.10669H22.4711V23.8934H21.6178Z"
-              fill="white"
-            />
-          </svg>
-        </a>
-        <div>© Miguelgarest, 2025.</div>
+        <div style={{ fontSize: '1.2rem' }}>⛩</div>
+        © Miguelgarest, 2025.
       </div>
     </div>
   );

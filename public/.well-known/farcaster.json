@@ -4,11 +4,14 @@
     "payload": "eyJkb21haW4iOiJmYy5taWd1ZWxnYXJlc3QuY29tIn0",
     "signature": "MHg1ZDc1MDk3ZTEwY2FmNWIwNDkzNjgzOTQ5ZWNiZjIzMmJlODllYzEwNmE4ODhhNDQ3NTE1OGU3OGEzYWQ1OWZlNjUyZWMwNTkyNjYwOGYzYzVjMGFjYWNjYTE4M2JkNzFkNGYxODdmZmYxZjI3MTNhNGYxZDEwNjcwMzgyYTFmZTFi"
   },
+<meta name="fc:frame" content="<stringified FrameEmbed JSON>" />
   "frame": {
     "version": "1",
     "name": "Daily Vibes",
     "iconUrl": "https://fc.miguelgarest.com/fc/0.gif",
     "homeUrl": "https://fc.miguelgarest.com",
+    "imageUrl": "https://fc.miguelgarest.com/fc/0.gif",
+    "button.title": "Try me!",
     "splashImageUrl": "https://fc.miguelgarest.com/fc/splash.png",
     "splashBackgroundColor": "#DCE5FF",
     "subtitle": "Find a vibe to guide your day",

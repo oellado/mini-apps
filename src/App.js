@@ -4,23 +4,23 @@ import { sdk } from '@farcaster/frame-sdk';
 const vibes = [
   {
     text: 'Today is for movement, get the energy flowing',
-    gif: 'https://fc-daily-vibes-git-master-mgrsts-projects.vercel.app/fc/0.gif'
+    gif: 'https://fc.miguelgarest.com/fc/0.gif'
   },
   {
     text: 'Let loose. Today is made for fun.',
-    gif: 'https://fc-daily-vibes-git-master-mgrsts-projects.vercel.app/fc/1.gif'
+    gif: 'https://fc.miguelgarest.com/fc/1.gif'
   },
   {
     text: 'Find your rhythm and let it carry you.',
-    gif: 'https://fc-daily-vibes-git-master-mgrsts-projects.vercel.app/fc/2.gif'
+    gif: 'https://fc.miguelgarest.com/fc/2.gif'
   },
   {
     text: 'Adventure awaits. Try something new today.',
-    gif: 'https://fc-daily-vibes-git-master-mgrsts-projects.vercel.app/fc/3.gif'
+    gif: 'https://fc.miguelgarest.com/fc/3.gif'
   },
   {
     text: 'Reach out, someone needs your love today.',
-    gif: 'https://fc-daily-vibes-git-master-mgrsts-projects.vercel.app/fc/4.gif'
+    gif: 'https://fc.miguelgarest.com/fc/4.gif'
   }
 ];
 

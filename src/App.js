@@ -39,16 +39,12 @@ function App() {
     setResult(random);
   };
 
-  const handleShare = async () => {
+  const handleShare = () => {
   if (!result) return;
-  const castText = `${result.text}\n\nhttps://fc.miguelgarest.com\n\n${result.gif}`;
-  try {
-    await sdk.actions.cast({ text: castText });
-    alert('Cast shared!');
-  } catch (err) {
-    alert('Failed to share.');
-    console.error('Error sharing cast:', err);
-  }
+  const castText = `${result.text}\n\n${result.gif}\nhttps://fc.miguelgarest.com`;
+  const encoded = encodeURIComponent(castText);
+  const shareUrl = `https://warpcast.com/~/compose?text=${encoded}`;
+  window.open(shareUrl, "_blank");
 };
 
   if (showSplash) {

@@ -40,16 +40,16 @@ function App() {
   };
 
   const handleShare = async () => {
-    if (!result) return;
-    const castText = `${result.text}\n\nhttps://mini-app1-zeta.vercel.app\n\n${result.gif}`;
-    try {
-      await sdk.actions.cast({ text: castText });
-      alert('Cast shared!');
-    } catch (err) {
-      alert('Failed to share.');
-      console.error(err);
-    }
-  };
+  if (!result) return;
+  const castText = `${result.text}\n\nhttps://fc.miguelgarest.com\n\n${result.gif}`;
+  try {
+    await sdk.actions.cast({ text: castText });
+    alert('Cast shared!');
+  } catch (err) {
+    alert('Failed to share.');
+    console.error('Error sharing cast:', err);
+  }
+};
 
   if (showSplash) {
     return (

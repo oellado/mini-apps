@@ -44,10 +44,9 @@ const handleShare = async () => {
   
   try {
     await sdk.actions.composeCast({
-      text: result.text, // Just include the text result
+      text: `${result.text}\n\nhttps://warpcast.com/miniapps/F3EoBj27HyTd/daily-vibes`, // Include mini app URL in text
       embeds: [
-        result.gif, // The GIF URL will be rendered as a media embed
-        'https://warpcast.com/miniapps/F3EoBj27HyTd/daily-vibes' // Mini app embed
+        result.gif // Only use the GIF as an embed
       ]
     });
   } catch (error) {

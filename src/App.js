@@ -42,23 +42,48 @@ function App() {
 const handleShare = () => {
   if (!result) return;
 
-  const castText = `${result.text}\n\n${result.gif}\n\nhttps://warpcast.com/miniapps/F3EoBj27HyTd/daily-vibes `;
-
+  const castText = `${result.text}\n\n${result.gif}\n\nhttps://warpcast.com/miniapps/F3EoBj27HyTd/daily-vibes`;
   const encoded = encodeURIComponent(castText);
   const shareUrl = `https://warpcast.com/~/compose?text=${encoded}`;
-// Detect iOS device
-const isIOS = /iPhone|iPad|iPod/.test(navigator.userAgent);
+  const warpcastScheme = `warpcast://compose?text=${encoded}`; // Warpcast native scheme
 
-// Use direct open for Android/Desktop
-// Use redirect for iOS (it will still open in mini app WebView)
-if (isIOS) {
-  window.location.href = shareUrl;
-} else {
-  window.open(shareUrl, "_blank");
-}
+  // Detect iOS device
+  const isIOS = /iPhone|iPad|iPod/.test(navigator.userAgent);
+  // Detect if running in WebView
+  const isWebView = window.navigator.userAgent.includes("WebView") || window.navigator.userAgent.includes("Warpcast");
 
+  const openShare = () => {
+    if (isIOS) {
+      // Try Warpcast native scheme first
+      const iframe = document.createElement("iframe");
+      iframe.style.display = "none";
+      iframe.src = warpcastScheme;
+      document.body.appendChild(iframe);
+
+      // Fallback to web URL after a short delay
+      setTimeout(() => {
+        window.open(shareUrl, "_blank") || (window.location.href = shareUrl);
+        document.body.removeChild(iframe);
+      }, 500);
+    } else {
+      // Android/Desktop: Open in new tab
+      window.open(shareUrl, "_blank");
+    }
+  };
+
+  // Execute share action
+  try {
+    openShare();
+  } catch (error) {
+    console.error("Share failed:", error);
+    // Fallback: Copy text to clipboard
+    navigator.clipboard.writeText(castText).then(() => {
+      alert("Failed to open Warpcast. Text copied to clipboard!");
+    }).catch(() => {
+      alert("Failed to share. Please copy this text manually:\n\n" + castText);
+    });
+  }
 };
-
   if (showSplash) {
     return (
       <div style={{

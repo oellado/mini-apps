@@ -1,15 +1,33 @@
 {
+  "accountAssociation": {
+    "header": "eyJmaWQiOjMyMzI1MSwidHlwZSI6ImN1c3RvZHkiLCJrZXkiOiIweDk1MjhkMDUwN2Q3MzNGRUFkRThkNWY2M2QwQTJlNzAxNjQ2NjkwNkIifQ",
+    "payload": "eyJkb21haW4iOiJmYy5taWd1ZWxnYXJlc3QuY29tIn0",
+    "signature": "MHg1ZDc1MDk3ZTEwY2FmNWIwNDkzNjgzOTQ5ZWNiZjIzMmJlODllYzEwNmE4ODhhNDQ3NTE1OGU3OGEzYWQ1OWZlNjUyZWMwNTkyNjYwOGYzYzVjMGFjYWNjYTE4M2JkNzFkNGYxODdmZmYxZjI3MTNhNGYxZDEwNjcwMzgyYTFmZTFi"
+  },
   "frame": {
     "version": "1",
     "name": "Daily Vibe",
-    "subtitle": "Find a vibe to guide your day",
-    "description": "Tap the button to get a surprise vibe — cast it if it feels right.",
-    "tagline": "Discover your daily vibe.",
     "iconUrl": "https://fc.miguelgarest.com/fc/0.gif",
+    "homeUrl": "https://fc.miguelgarest.com",
     "splashImageUrl": "https://fc.miguelgarest.com/fc/2.gif",
     "splashBackgroundColor": "#EAEAE8",
-    "homeUrl": "https://fc.miguelgarest.com",
+    "subtitle": "Find a vibe to guide your day",
+    "description": "Share random vibes and brighten your day.",
+    "screenshotUrls": [
+      "https://fc.miguelgarest.com/screenshot1.png",
+      "https://fc.miguelgarest.com/screenshot2.png"
+    ],
     "primaryCategory": "entertainment",
-    "tags": ["vibe", "gif", "daily", "fun", "frame"]
+    "tags": [
+      "vibes",
+      "daily",
+      "random",
+      "fun"
+    ],
+    "heroImageUrl": "https://fc.miguelgarest.com/og-image.png",
+    "tagline": "Brighten your day with vibes",
+    "ogTitle": "Daily Vibe Mini App",
+    "ogDescription": "Random vibes and easy sharing on Farcaster.",
+    "ogImageUrl": "https://fc.miguelgarest.com/og-image.png"
   }
 }

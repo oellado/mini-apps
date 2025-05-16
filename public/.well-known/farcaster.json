@@ -6,16 +6,16 @@
   },
   "frame": {
     "version": "1",
-    "name": "Daily Vibe",
+    "name": "Daily Vibes",
     "iconUrl": "https://fc.miguelgarest.com/fc/0.gif",
     "homeUrl": "https://fc.miguelgarest.com",
-    "splashImageUrl": "https://fc.miguelgarest.com/fc/2.gif",
-    "splashBackgroundColor": "#EAEAE8",
+    "splashImageUrl": "https://fc.miguelgarest.com/fc/splash.png",
+    "splashBackgroundColor": "#DCE5FF",
     "subtitle": "Find a vibe to guide your day",
     "description": "Share random vibes and brighten your day.",
     "screenshotUrls": [
-      "https://fc.miguelgarest.com/screenshot1.png",
-      "https://fc.miguelgarest.com/screenshot2.png"
+      "https://fc.miguelgarest.com/fc/screen1.png",
+      "https://fc.miguelgarest.com/fc/screen2.png"
     ],
     "primaryCategory": "entertainment",
     "tags": [
@@ -24,10 +24,10 @@
       "random",
       "fun"
     ],
-    "heroImageUrl": "https://fc.miguelgarest.com/og-image.png",
+    "heroImageUrl": "https://fc.miguelgarest.com/fc/0.gif",
     "tagline": "Brighten your day with vibes",
     "ogTitle": "Daily Vibe Mini App",
     "ogDescription": "Random vibes and easy sharing on Farcaster.",
-    "ogImageUrl": "https://fc.miguelgarest.com/og-image.png"
+    "ogImageUrl": "https://fc.miguelgarest.com/fc/0.gif"
   }
 }

@@ -35,19 +35,19 @@ function App() {
   }, []);
 
   const handleClick = () => {
-    const randomIndex = Math.floor(Math.random() * vibes.length);
-    const randomVibe = vibes[randomIndex];
-    setResult({ ...randomVibe, index: randomIndex });
+    const random = vibes[Math.floor(Math.random() * vibes.length)];
+    setResult(random);
   };
 
-  const handleShare = () => {
-    if (!result) return;
-    const embedUrl = `https://fc.miguelgarest.com/embed-${result.index}.html`;
-    const castText = `${result.text}\n\n${embedUrl}`;
-    const encoded = encodeURIComponent(castText);
-    const shareUrl = `https://warpcast.com/~/compose?text=${encoded}`;
-    window.open(shareUrl, "_blank");
-  };
+const handleShare = () => {
+  if (!result) return;
+
+  const castText = `${result.text}\n\n${result.gif}\n\nhttps://warpcast.com/miniapps/F3EoBj27HyTd/daily-vibes`;
+
+  const encoded = encodeURIComponent(castText);
+  const shareUrl = `https://warpcast.com/~/compose?text=${encoded}`;
+  window.open(shareUrl, "_blank");
+};
 
   if (showSplash) {
     return (

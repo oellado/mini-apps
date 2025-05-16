@@ -35,27 +35,20 @@ function App() {
   }, []);
 
   const handleClick = () => {
-    const random = vibes[Math.floor(Math.random() * vibes.length)];
-    setResult(random);
+    const randomIndex = Math.floor(Math.random() * vibes.length);
+    const randomVibe = vibes[randomIndex];
+    setResult({ ...randomVibe, index: randomIndex });
   };
 
-const handleShare = () => {
-  if (!result) return;
+  const handleShare = () => {
+    if (!result) return;
+    const embedUrl = `https://fc.miguelgarest.com/embed-${result.index}.html`;
+    const castText = `${result.text}\n\n${embedUrl}`;
+    const encoded = encodeURIComponent(castText);
+    const shareUrl = `https://warpcast.com/~/compose?text=${encoded}`;
+    window.open(shareUrl, "_blank");
+  };
 
-  // Assume result.index contains the current vibe index (0 to 4)
-  // If not, you'll need to add it in your logic when generating the vibe result
-
-  // Build the embed URL for the current vibe index:
-  const embedUrl = `https://fc.miguelgarest.com/embed-${result.index}.html`;
-
-  // Construct cast text: quote + single embed URL
-  const castText = `${result.text}\n\n${embedUrl}`;
-
-  // Encode and open share URL on Warpcast
-  const encoded = encodeURIComponent(castText);
-  const shareUrl = `https://warpcast.com/~/compose?text=${encoded}`;
-  window.open(shareUrl, "_blank");
-};
   if (showSplash) {
     return (
       <div style={{

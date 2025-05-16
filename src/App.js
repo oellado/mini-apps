@@ -44,12 +44,14 @@ const handleShare = async () => {
   
   try {
     await sdk.actions.composeCast({
-      text: `${result.text}\n\n${result.gif}`,
-      embeds: ['https://warpcast.com/miniapps/F3EoBj27HyTd/daily-vibes']
+      text: result.text, // Just include the text result
+      embeds: [
+        result.gif, // The GIF URL will be rendered as a media embed
+        'https://warpcast.com/miniapps/F3EoBj27HyTd/daily-vibes' // Mini app embed
+      ]
     });
   } catch (error) {
     console.error('Error sharing to Warpcast:', error);
-    // You may want to show an error message to the user here
   }
 };
 

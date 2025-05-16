@@ -46,7 +46,7 @@ const handleShare = () => {
 
   const encoded = encodeURIComponent(castText);
   const shareUrl = `https://warpcast.com/~/compose?text=${encoded}`;
-  window.open(shareUrl, "_blank");
+  window.location.href = shareUrl;
 };
 
   if (showSplash) {

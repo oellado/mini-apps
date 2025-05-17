@@ -26,16 +26,12 @@ const vibes = [
 
 function App() {
   const [result, setResult] = useState(null);
-  const [user, setUser] = useState(null);
+  const [showSplash, setShowSplash] = useState(true);
 
   useEffect(() => {
     sdk.actions.ready();
-    // Fetch Farcaster user context
-    sdk.context.then(ctx => {
-      if (ctx && ctx.user) {
-        setUser(ctx.user);
-      }
-    });
+    const timeout = setTimeout(() => setShowSplash(false), 1500); // 1.5 seconds
+    return () => clearTimeout(timeout);
   }, []);
 
   const handleClick = () => {
@@ -59,10 +55,20 @@ const handleShare = async () => {
   }
 };
 
-  // Add a mock mint handler
-  const handleMint = () => {
-    alert('Minting (mock)...');
-  };
+  if (showSplash) {
+    return (
+      <div style={{
+        backgroundColor: '#DCE5FF',
+        height: '100vh',
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+        fontSize: '3rem'
+      }}>
+        •ᴗ•
+      </div>
+    );
+  }
 
   return (
     <div style={{
@@ -76,33 +82,12 @@ const handleShare = async () => {
       <div style={{
         backgroundColor: '#BFC8E0',
         padding: '12px',
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'center',
+        textAlign: 'center',
         fontWeight: 'bold',
         fontSize: '1.1rem',
-        color: 'white',
-        position: 'relative'
+        color: 'white'
       }}>
-        <span style={{ flex: 1, textAlign: 'center' }}>Daily Vibes</span>
-        {user && (
-          <img
-            src={user.pfpUrl}
-            alt={user.username}
-            style={{
-              width: '32px',
-              height: '32px',
-              borderRadius: '50%',
-              objectFit: 'cover',
-              border: '2px solid #fff',
-              background: '#eee',
-              position: 'absolute',
-              right: 16,
-              top: '50%',
-              transform: 'translateY(-50%)'
-            }}
-          />
-        )}
+        daily vibes
       </div>
 
       {/* Main */}
@@ -122,7 +107,7 @@ const handleShare = async () => {
               fontWeight: 'bold',
               marginBottom: '20px'
             }}>
-              Show me today's energy
+              Show me today’s energy
             </h1>
             <button
               onClick={handleClick}
@@ -147,68 +132,30 @@ const handleShare = async () => {
               src={result.gif}
               alt="vibe gif"
               style={{
-                width: '200px',
-                height: '200px',
+                width: '300px',
+                height: '300px',
                 objectFit: 'contain',
                 backgroundColor: '#EAEAE8',
                 borderRadius: '24px',
                 padding: '10px',
-                marginBottom: '20px'
+                marginBottom: '30px'
               }}
             />
-            <div style={{ display: 'flex', justifyContent: 'center', gap: '16px', marginBottom: '12px' }}>
-              <button
-                onClick={handleShare}
-                style={{
-                  fontSize: '1.2rem',
-                  backgroundColor: '#fff',
-                  color: '#000',
-                  padding: '10px 20px',
-                  border: 'none',
-                  borderRadius: '12px',
-                  fontWeight: 'bold',
-                  cursor: 'pointer',
-                  minWidth: '100px'
-                }}
-              >
-                Share
-              </button>
-              <button
-                onClick={handleMint}
-                style={{
-                  fontSize: '1.2rem',
-                  backgroundColor: '#6C9BCF',
-                  color: '#fff',
-                  padding: '10px 20px',
-                  border: 'none',
-                  borderRadius: '12px',
-                  fontWeight: 'bold',
-                  cursor: 'pointer',
-                  minWidth: '100px'
-                }}
-              >
-                Mint
-              </button>
-            </div>
-            <div style={{ display: 'flex', justifyContent: 'center' }}>
-              <button
-                onClick={() => setResult(null)}
-                style={{
-                  fontSize: '1.2rem',
-                  backgroundColor: '#A8B0CD',
-                  color: '#fff',
-                  padding: '10px 20px',
-                  border: 'none',
-                  borderRadius: '12px',
-                  fontWeight: 'bold',
-                  cursor: 'pointer',
-                  marginTop: '0px',
-                  minWidth: '100px'
-                }}
-              >
-                Reset
-              </button>
-            </div>
+            <button
+              onClick={handleShare}
+              style={{
+                fontSize: '1.2rem',
+                backgroundColor: '#fff',
+                color: '#000',
+                padding: '10px 20px',
+                border: 'none',
+                borderRadius: '12px',
+                fontWeight: 'bold',
+                cursor: 'pointer'
+              }}
+            >
+              Share
+            </button>
           </>
         )}
       </div>

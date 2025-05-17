@@ -26,12 +26,16 @@ const vibes = [
 
 function App() {
   const [result, setResult] = useState(null);
-  const [showSplash, setShowSplash] = useState(true);
+  const [user, setUser] = useState(null);
 
   useEffect(() => {
     sdk.actions.ready();
-    const timeout = setTimeout(() => setShowSplash(false), 1500); // 1.5 seconds
-    return () => clearTimeout(timeout);
+    // Fetch Farcaster user context
+    sdk.context.then(ctx => {
+      if (ctx && ctx.user) {
+        setUser(ctx.user);
+      }
+    });
   }, []);
 
   const handleClick = () => {
@@ -39,36 +43,20 @@ function App() {
     setResult(random);
   };
 
-const handleShare = async () => {
-  if (!result) return;
-  
-  try {
-    await sdk.actions.composeCast({
-      text: result.text, // Just include the text result
-      embeds: [
-        result.gif, // The GIF URL will be rendered as a media embed
-        'https://warpcast.com/miniapps/F3EoBj27HyTd/daily-vibes' // Mini app embed
-      ]
-    });
-  } catch (error) {
-    console.error('Error sharing to Warpcast:', error);
-  }
-};
-
-  if (showSplash) {
-    return (
-      <div style={{
-        backgroundColor: '#DCE5FF',
-        height: '100vh',
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'center',
-        fontSize: '3rem'
-      }}>
-        •ᴗ•
-      </div>
-    );
-  }
+  const handleShare = async () => {
+    if (!result) return;
+    try {
+      await sdk.actions.composeCast({
+        text: result.text,
+        embeds: [
+          result.gif,
+          'https://warpcast.com/miniapps/F3EoBj27HyTd/daily-vibes'
+        ]
+      });
+    } catch (error) {
+      console.error('Error sharing to Warpcast:', error);
+    }
+  };
 
   return (
     <div style={{
@@ -82,12 +70,33 @@ const handleShare = async () => {
       <div style={{
         backgroundColor: '#BFC8E0',
         padding: '12px',
-        textAlign: 'center',
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
         fontWeight: 'bold',
         fontSize: '1.1rem',
-        color: 'white'
+        color: 'white',
+        position: 'relative'
       }}>
-        daily vibes
+        <span style={{ flex: 1, textAlign: 'center' }}>Daily Vibes</span>
+        {user && (
+          <img
+            src={user.pfpUrl}
+            alt={user.username}
+            style={{
+              width: '32px',
+              height: '32px',
+              borderRadius: '50%',
+              objectFit: 'cover',
+              border: '2px solid #fff',
+              background: '#eee',
+              position: 'absolute',
+              right: 16,
+              top: '50%',
+              transform: 'translateY(-50%)'
+            }}
+          />
+        )}
       </div>
 
       {/* Main */}
@@ -107,7 +116,7 @@ const handleShare = async () => {
               fontWeight: 'bold',
               marginBottom: '20px'
             }}>
-              Show me today’s energy
+              Show me today's energy
             </h1>
             <button
               onClick={handleClick}
@@ -132,30 +141,52 @@ const handleShare = async () => {
               src={result.gif}
               alt="vibe gif"
               style={{
-                width: '300px',
-                height: '300px',
+                width: '200px',
+                height: '200px',
                 objectFit: 'contain',
                 backgroundColor: '#EAEAE8',
                 borderRadius: '24px',
                 padding: '10px',
-                marginBottom: '30px'
+                marginBottom: '20px'
               }}
             />
-            <button
-              onClick={handleShare}
-              style={{
-                fontSize: '1.2rem',
-                backgroundColor: '#fff',
-                color: '#000',
-                padding: '10px 20px',
-                border: 'none',
-                borderRadius: '12px',
-                fontWeight: 'bold',
-                cursor: 'pointer'
-              }}
-            >
-              Share
-            </button>
+            <div style={{ display: 'flex', justifyContent: 'center', marginBottom: '12px' }}>
+              <button
+                onClick={handleShare}
+                style={{
+                  fontSize: '1.2rem',
+                  backgroundColor: '#fff',
+                  color: '#000',
+                  padding: '10px 20px',
+                  border: 'none',
+                  borderRadius: '12px',
+                  fontWeight: 'bold',
+                  cursor: 'pointer',
+                  minWidth: '100px'
+                }}
+              >
+                Share
+              </button>
+            </div>
+            <div style={{ display: 'flex', justifyContent: 'center' }}>
+              <button
+                onClick={() => setResult(null)}
+                style={{
+                  fontSize: '1.2rem',
+                  backgroundColor: '#A8B0CD',
+                  color: '#fff',
+                  padding: '10px 20px',
+                  border: 'none',
+                  borderRadius: '12px',
+                  fontWeight: 'bold',
+                  cursor: 'pointer',
+                  marginTop: '0px',
+                  minWidth: '100px'
+                }}
+              >
+                Reset
+              </button>
+            </div>
           </>
         )}
       </div>

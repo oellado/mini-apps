@@ -87,7 +87,7 @@ const handleShare = async () => {
         fontSize: '1.1rem',
         color: 'white'
       }}>
-        daily vibes
+        Hello!
       </div>
 
       {/* Main */}
